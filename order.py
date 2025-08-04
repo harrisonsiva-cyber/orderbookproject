@@ -1,5 +1,4 @@
 from datetime import datetime
-from collections import namedtuple
 from itertools import count
 
 class Order:
@@ -7,7 +6,7 @@ class Order:
     VALID_TYPES = {"FOK", "LIMIT", "MARKET"}
     VALID_SIDES = {"BUY", "SELL"}
 
-    def __init__(self, order_type, side, price, quantity, timestamp=None):
+    def __init__(self, order_type, side, price, rounded_PRICE, quantity, timestamp=None):
         # Validating order type
         if order_type not in self.VALID_TYPES:
             raise ValueError(f"Invalid order type: {order_type}. Must be one of {self.VALID_TYPES}")
@@ -18,14 +17,17 @@ class Order:
 
         # Validating price
         if not isinstance(price, (int, float)) or price <= 0:
-            raise ValueError("Price must be a positive number")
+            raise ValueError("Price must be a positive integer or positive decimal")
+
+        if not isinstance(rounded_PRICE, (int, float)) or rounded_PRICE <= 0:
+            raise ValueError("Rounded Price must be a positive integer or positive decimal")
 
         # Validating quantity
         if not isinstance(quantity, (int, float)) or quantity <= 0:
             raise ValueError("Quantity must be a positive number")
 
         # Validating timestamp
-        if timestamp == False:
+        if timestamp is None:
             timestamp = datetime.now()
         elif not isinstance(timestamp, datetime):
             raise ValueError("Timestamp must be a datetime object")
@@ -40,32 +42,31 @@ class Order:
     def __str__(self):
         return f"Order({self.order_type}, {self.side}, {self.price}, {self.quantity}, {self.timestamp})"
 
-BUY = namedtuple('Order', ['order_number' ,'order_type', 'rounded_price', 'quantity', 'timestamp'])
-SELL = namedtuple('Order',['order_number','order_type', 'rounded_price', 'quantity', 'timestamp'])
-order_number = 0
-for i in count(0):
-    price = float(input("Enter the total price of the order: £ "))
-    quantity = int(input("Enter the number of shares: "))
-    timestamp = datetime.now()
-    side = str(input("Enter whether the order is a buy or sell: ")).upper()
-    order_type = str(input("Enter whether the order is a FOK, LIMIT OR MARKET: ")).upper()
-    rounded_PRICE = round(price, 2)
-    x = input("Type Yes if you would like to carry on or Stop if you want to stop: ").upper()
-    if x == 'STOP':
-        break
-    else:
-        order_number += 1
-    if side == 'BUY':
-        list_1 = list(BUY)
-        list_1.append('order_number','order_type', 'rounded_price', 'quantity', 'timestamp')
-        BUY = tuple(list_1)
-        print(BUY)
-    elif side == 'SELL':
-        list_2 = list(SELL)
-        list_2.append('order_number','order_type', 'rounded_price', 'quantity', 'timestamp')
-        SELL = tuple(list_2)
-        print(SELL)
-    print(f'Your order number is {order_number}')
-    print(timestamp)
- # Create a order book class
- # Use dictionaries
+class orderBook:
+    # Creating a list for buying and selling
+    BUY_QUEUE = {}
+    SELL_QUEUE = {}
+    order_number = 1
+
+    for i in count(0):
+        side = str(input("Enter whether the order is a buy or sell: ")).upper()
+        order_type = str(input("Enter whether the order is a FOK, LIMIT OR MARKET: ")).upper()
+        price = float(input("Enter the total price of the order: £ "))
+        rounded_PRICE = round(price, 2)
+        quantity = int(input("Enter the number of shares: "))
+        timestamp = datetime.now()
+        x = input("Type Yes if you would like to carry on or Stop if you want to stop: ").upper()
+
+        if side == 'BUY':
+            BUY_QUEUE = {order_number, order_type, rounded_PRICE, quantity, timestamp}
+            order_number += 1
+        elif side == 'SELL':
+            SELL_QUEUE = {order_number, order_type, rounded_PRICE, quantity, timestamp}
+            order_number += 1
+        if x == 'STOP':
+            print(BUY_QUEUE)
+            print(SELL_QUEUE)
+            break
+        else:
+            order_number += 1
+
