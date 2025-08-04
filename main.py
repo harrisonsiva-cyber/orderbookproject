@@ -1,20 +1,56 @@
-import argparse # Importing argparse to use the argparse module (built-in library for parsing command-line arguments)
-from cli.commands import greet # From commands.py importing the greet function
+import order
+from itertools import count
 
-# Define the main function for the CLI scaffold
+from order import OrderType
+
+
 def main():
-    parser = argparse.ArgumentParser(description="My CLI App")  # Creating the main argument parser with a description
-    subparsers = parser.add_subparsers(dest="command") # 'dest="command" - chosen subcommand name will be stored in args.command
 
-    greet_parser = subparsers.add_parser("greet", help="Greet a user") # Adding the 'greet' subcommand to the subparsers
-    greet_parser.add_argument("--name", required=True, help="Name of the person to greet")
+    buy_orders = []
+    sell_orders = []
 
-    args = parser.parse_args()
+    order_number = 0
+    for i in count(0):
+        # read order details from the user
+        entered_price = float(input("Enter the total price of the order: £ "))
+        price = round(entered_price, 2)
+        if not isinstance(price, (int, float)) or price <= 0:
+            raise ValueError("Price must be a positive number")
 
-    if args.command == "greet":
-        greet(args.name)
-    else:
-        parser.print_help() # If no command was provided, then show help
+        quantity = int(input("Enter the number of shares: "))
+        if not isinstance(quantity, (int, float)) or quantity <= 0:
+            raise ValueError("Quantity must be a positive number")
+
+        strside = input("Enter whether the order is a buy or sell: ").upper()
+#        if strside not in order.OrderSide:
+#            raise ValueError(f"Invalid side: {strside}.")
+        side = order.OrderSide[strside]
+
+        order_type = str(input("Enter whether the order is a FOK, LIMIT OR MARKET: ")).upper()
+#        if order_type not in order.OrderType:
+#            raise ValueError(f"Invalid order type: {order_type}.")
+
+        # Create an order instance
+        order_instance = order.Order(order_type, side, price, quantity)
+        if side == order.OrderSide.BUY:
+            buy_orders.append(order_instance)
+        else:
+            sell_orders.append(order_instance)
+
+        print(order_instance)
+
+        x = input("Type Yes if you would like to carry on or Stop if you want to stop: ").upper()
+        if x == 'STOP':
+            break
+
+    print("\nBuy Orders:")
+    for myorder in buy_orders:
+        print(myorder)
+
+    print("\nSell Orders:")
+    for myorder in sell_orders:
+        print(myorder)
+
 
 # Only run the main function when the script is executed correctly.
 if __name__ == "__main__":
