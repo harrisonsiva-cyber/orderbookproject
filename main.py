@@ -26,9 +26,10 @@ def main():
 #            raise ValueError(f"Invalid side: {strside}.")
         side = order.OrderSide[strside]
 
-        order_type = str(input("Enter whether the order is a FOK, LIMIT OR MARKET: ")).upper()
+        str_order_type = str(input("Enter whether the order is a FOK, LIMIT OR MARKET: ")).upper()
 #        if order_type not in order.OrderType:
 #            raise ValueError(f"Invalid order type: {order_type}.")
+        order_type = order.OrderType[str_order_type]
 
         # Create an order instance
         order_instance = order.Order(order_type, side, price, quantity)

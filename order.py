@@ -13,6 +13,8 @@ class OrderSide(Enum):
 
 class Order:
     order_id = 0
+    print_format = "{:<10}\t\t{:<10}\t\t{:>10}\t\t{:>10}"
+
     def __init__(self, order_type, side, price, quantity, timestamp=None):
         self.order_type = order_type
         self.side = side
@@ -24,8 +26,11 @@ class Order:
         Order.order_id += 1
         self.order_id = Order.order_id
 
+
+
     def __str__(self):
-        return f"{self.order_id}\t\t{self.order_type}\t\t{self.quantity}\t\t{self.price}"
+        return self.print_format.format(
+            self.order_id, self.order_type.name, self.side.name, self.quantity, self.price)
 
     def print(self):
         print(f"Order ID: {self.order_id}")
