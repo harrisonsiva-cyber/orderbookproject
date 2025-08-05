@@ -13,7 +13,7 @@ class OrderSide(Enum):
 
 class Order:
     order_id = 0
-    print_format = "{:<10}\t\t{:<10}\t\t{:>10}\t\t{:>10}"
+    print_format = "{:<10}\t{:<10}\t{:>10}\t{:>10}\t{:>10}"
 
     def __init__(self, order_type, side, price, quantity, timestamp=None):
         self.order_type = order_type
