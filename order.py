@@ -34,6 +34,7 @@ class Order:
     def __str__(self):
         return f"Order({self.order_type}, {self.side}, {self.price}, {self.quantity})"
 
+
 class orderBook:
     # Creating a list for buying and selling
     BUY_ORDERS = {}
@@ -67,7 +68,13 @@ class orderBook:
             }
         order_number += 1
         if x == 'STOP':
-            print(BUY_ORDERS)
-            print(SELL_ORDERS)
+            print("BUY ORDERS: ")
+            for order_number, order in BUY_ORDERS.items():
+                print(f'{order_number}: {order}')
+            print("\nSELL ORDERS: ")
+            for order_number, order in SELL_ORDERS.items():
+                print(f'{order_number}: {order}')
             break
 
+    BUY_LIST=sorted(BUY_ORDERS, key=price)
+    SELL_LIST=sorted(SELL_ORDERS, key=price)
