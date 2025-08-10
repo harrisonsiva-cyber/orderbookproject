@@ -41,7 +41,7 @@ class Order:
 
 
 class orderBook:
-    # Creating a list for buying and selling
+    # Creating a list for buying and selling.
     BUY_ORDERS = {}
     SELL_ORDERS = {}
     order_number = 1
