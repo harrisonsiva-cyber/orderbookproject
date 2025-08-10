@@ -5,6 +5,8 @@ class Order:
     VALID_TYPES = {"FOK", "LIMIT", "MARKET"}
     VALID_SIDES = {"BUY", "SELL"}
 
+    print_format = "{:<10}\t\t{:<10}\t\t{:>10}\t\t{:>10}"
+
     def __init__(self, order_type, side, price, rounded_PRICE, quantity):
         # Validating order type
         if order_type not in self.VALID_TYPES:
@@ -29,10 +31,13 @@ class Order:
         self.order_type = order_type
         self.side = side
         self.price = price
+        self.rounded_PRICE = rounded_PRICE
         self.quantity = quantity
 
     def __str__(self):
-        return f"Order({self.order_type}, {self.side}, {self.price}, {self.quantity})"
+        return f"{self.order_number}\t\t{self.order_type}\t\t{self.quantity}\t\t{self.price}"
+        return self.print_format.format(
+            self.order_number, self.order_type, self.side, self.quantity, self.price)
 
 
 class orderBook:
@@ -76,5 +81,4 @@ class orderBook:
                 print(f'{order_number}: {order}')
             break
 
-    BUY_LIST=sorted(BUY_ORDERS, key=price)
-    SELL_LIST=sorted(SELL_ORDERS, key=price)
+
