@@ -1,14 +1,12 @@
 from itertools import count
-import order
 
-from order import OrderType
-
+import order as ord
 
 class order_book:
 
     # Class-level constants for valid order types and sides
-    VALID_TYPES = {"FOK", "LIMIT", "MARKET"}
-    VALID_SIDES = {"BUY", "SELL"}
+    VALID_TYPES = ["FOK", "LIMIT", "MARKET"]
+    VALID_SIDES = ["BUY", "SELL"]
 
     BUY_ORDERS = []
     SELL_ORDERS = []
@@ -19,12 +17,12 @@ class order_book:
         str_side = str(input("Enter whether the order is a buy or sell: ")).upper()
         if str_side not in VALID_SIDES:  # Validating side
             raise ValueError(f"Invalid side: {str_side}. Must be one of {VALID_SIDES}")
-        side = order.OrderSide[str_side]
+        side = ord.OrderSide[str_side]
 
         str_order_type = str(input("Enter whether the order is a FOK, LIMIT OR MARKET: ")).upper()
         if str_order_type not in VALID_TYPES:  # Validating order type
             raise ValueError(f"Invalid order type: {str_order_type}. Must be one of {VALID_TYPES}")
-        order_type = order.OrderType[str_order_type]
+        order_type = ord.OrderType[str_order_type]
 
         quantity = int(input("Enter the number of shares: "))
         if not isinstance(quantity, (int, float)) or quantity <= 0:
@@ -35,8 +33,8 @@ class order_book:
         if not isinstance(price, (int, float)) or price <= 0:  # Validating price
             raise ValueError("Price must be a positive integer or positive decimal")
 
-        order_instance = order.Order(order_type, side, price, quantity)
-        if side == order.OrderSide.BUY:
+        order_instance = ord.Order(order_number, order_type, side, price, quantity)
+        if side == ord.OrderSide.BUY:
             BUY_ORDERS.append(order_instance)
         else:
             SELL_ORDERS.append(order_instance)
