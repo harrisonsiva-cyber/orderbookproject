@@ -1,6 +1,7 @@
 import unittest
 import order
 
+
 class MyTestCase(unittest.TestCase):
     def test_orders(self):
         buy_orders = []
@@ -28,6 +29,7 @@ class MyTestCase(unittest.TestCase):
         print("\nSell Orders:")
         for ord in sell_orders:
             print(ord)
+
 
 if __name__ == '__main__':
     unittest.main()

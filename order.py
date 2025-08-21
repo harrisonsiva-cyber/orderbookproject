@@ -1,16 +1,19 @@
 from enum import Enum
 
+
 class OrderType(Enum):
     FOK = "FOK"
     LIMIT = "LIMIT"
     MARKET = "MARKET"
 
+
 class OrderSide(Enum):
     BUY = "BUY"
     SELL = "SELL"
 
+
 class Order:
-    print_format = "{:<5}\t{:<5}\t{:>10}\t{:>10}\t{:>10}"
+    print_format = "{:<5}\t{:<5}\t{:>7}\t{:>7}\t{:>7}"
 
     def __init__(self, order_number, order_type, side, price, quantity):
         self.order_number = order_number
@@ -29,5 +32,3 @@ class Order:
         print(f"Order Side: {self.side}")
         print(f"Price: {self.price}")
         print(f"Quantity: {self.quantity}")
-
-
