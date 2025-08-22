@@ -1,6 +1,6 @@
 from itertools import count
-from beautifultable import BeautifulTable
 import order as ord
+
 
 class order_book:
 
@@ -44,22 +44,8 @@ class order_book:
         if x == 'STOP':
             break
 
-    print("\nBuy Orders: ")
-    for my_order in BUY_ORDERS:
-        print(my_order)
+    BUY_ORDERS.sort(key=lambda x: x['price'])
+    print(BUY_ORDERS)
 
-    print("\nSell Orders: ")
-    for my_order in SELL_ORDERS:
-        print(my_order)
-
-    if side == ord.OrderSide.BUY:
-        buy_table = BeautifulTable()
-        buy_table.column_headers = ["Order Number", "Order Type", "Price", "Quantity"]
-        buy_table.append_row([order_number, order_type, price, quantity])
-        print(buy_table)
-
-    if side == ord.OrderSide.SELL:
-        sell_table = BeautifulTable()
-        sell_table.column_headers = ["Order Number", "Order Type", "Price", "Quantity"]
-        sell_table.append_row([order_number, order_type, price, quantity])
-        print(sell_table)
+    SELL_ORDERS.sort(key=lambda x: x['price'], reverse=True)
+    print(SELL_ORDERS)
