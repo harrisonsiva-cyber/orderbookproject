@@ -1,5 +1,6 @@
 from itertools import count
 import order as ord
+import beautifultable as BeautifulTable
 
 
 class order_book:
@@ -45,7 +46,20 @@ class order_book:
             break
 
     BUY_ORDERS.sort(key=lambda x: x['price'])
-    print(BUY_ORDERS)
-
     SELL_ORDERS.sort(key=lambda x: x['price'], reverse=True)
-    print(SELL_ORDERS)
+
+    if side == ord.OrderSide.BUY:
+        buy_table = BeautifulTable()
+        buy_table.column_headers = ["Order Number", "Price", "Quantity"]
+        buy_table.append_row([order_number, price, quantity])
+        print(buy_table)
+
+    elif side == ord.OrderSide.SELL:
+        sell_table = BeautifulTable()
+        sell_table.column_headers = ["Order Number", "Price", "Quantity"]
+        sell_table.append_row([order_number, price, quantity])
+        print(sell_table)
+
+# Matching the fok orders
+# Matching the limit orders
+# Matching the market orders
