@@ -1,7 +1,7 @@
 from itertools import count
 import order as ord
 import beautifultable as BeautifulTable
-
+from order import Order
 
 class order_book:
 
@@ -34,7 +34,7 @@ class order_book:
         if not isinstance(price, (int, float)) or price <= 0:  # Validating price
             raise ValueError("Price must be a positive integer or positive decimal")
 
-        order_instance = ord.Order(order_number, order_type, side, price, quantity)
+        order_instance = ord.Order(order_number, order_type, side, price, quantity, timestamp=None)
         if side == ord.OrderSide.BUY:
             BUY_ORDERS.append(order_instance)
         else:
@@ -45,21 +45,19 @@ class order_book:
         if x == 'STOP':
             break
 
-    BUY_ORDERS.sort(key=lambda x: x['price'])
-    SELL_ORDERS.sort(key=lambda x: x['price'], reverse=True)
+        BUY_ORDERS = sorted(BUY_ORDERS, key=lambda x: x.price)
+        print(BUY_ORDERS)
+        SELL_ORDERS = sorted(SELL_ORDERS, key=lambda x: x.price)
+        print(SELL_ORDERS)
 
     if side == ord.OrderSide.BUY:
         buy_table = BeautifulTable()
-        buy_table.column_headers = ["Order Number", "Price", "Quantity"]
-        buy_table.append_row([order_number, price, quantity])
+        buy_table.column_headers = ["Order Number", "Order Type", "Price", "Quantity"]
+        buy_table.append_row([order_number, order_type, price, quantity])
         print(buy_table)
 
-    elif side == ord.OrderSide.SELL:
+    if side == ord.OrderSide.SELL:
         sell_table = BeautifulTable()
-        sell_table.column_headers = ["Order Number", "Price", "Quantity"]
-        sell_table.append_row([order_number, price, quantity])
+        sell_table.column_headers = ["Order Number", "Order Type", "Price", "Quantity"]
+        sell_table.append_row([order_number, order_type, price, quantity])
         print(sell_table)
-
-# Matching the fok orders
-# Matching the limit orders
-# Matching the market orders
