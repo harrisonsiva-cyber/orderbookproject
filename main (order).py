@@ -1,7 +1,7 @@
 from itertools import count
 import order as ord
-import beautifultable as BeautifulTable
 from order import Order
+
 
 class order_book:
 
@@ -11,7 +11,6 @@ class order_book:
 
     BUY_ORDERS = []
     SELL_ORDERS = []
-
     order_number = 0
 
     for i in count(0):
@@ -34,30 +33,32 @@ class order_book:
         if not isinstance(price, (int, float)) or price <= 0:  # Validating price
             raise ValueError("Price must be a positive integer or positive decimal")
 
-        order_instance = ord.Order(order_number, order_type, side, price, quantity, timestamp=None)
+        order_instance = ord.Order(order_number, order_type, side, price, quantity)
         if side == ord.OrderSide.BUY:
-            BUY_ORDERS.append(order_instance)
+            order_number += 1
+            order_book.BUY_ORDERS.append(order_instance)
         else:
-            SELL_ORDERS.append(order_instance)
+            order_number += 1
+            order_book.SELL_ORDERS.append(order_instance)
 
         x = input("Type Yes if you would like to carry on or Stop if you want to stop: ").upper()
 
         if x == 'STOP':
             break
 
-        BUY_ORDERS = sorted(BUY_ORDERS, key=lambda x: x.price)
-        print(BUY_ORDERS)
-        SELL_ORDERS = sorted(SELL_ORDERS, key=lambda x: x.price)
-        print(SELL_ORDERS)
+    sorted_BUY_ORDERS = BUY_ORDERS.sort(key=lambda x: x.price)
+    if order_book.BUY_ORDERS:
+        assert [order.order_number for order in BUY_ORDERS][-1] == order_instance.order_number
 
-    if side == ord.OrderSide.BUY:
-        buy_table = BeautifulTable()
-        buy_table.column_headers = ["Order Number", "Order Type", "Price", "Quantity"]
-        buy_table.append_row([order_number, order_type, price, quantity])
-        print(buy_table)
+    sorted_SELL_ORDERS = SELL_ORDERS.sort(key=lambda x: x.price)
+    if order_book.SELL_ORDERS:
+        assert [order.order_number for order in SELL_ORDERS][-1] == order_instance.order_number
+    print(sorted_BUY_ORDERS)
+    print(sorted_SELL_ORDERS)
 
-    if side == ord.OrderSide.SELL:
-        sell_table = BeautifulTable()
-        sell_table.column_headers = ["Order Number", "Order Type", "Price", "Quantity"]
-        sell_table.append_row([order_number, order_type, price, quantity])
-        print(sell_table)
+    if type == ord.OrderType.FOK:
+
+    elif type == ord.OrderType.LIMIT:
+
+    elif type == ord.OrderType.MARKET:
+

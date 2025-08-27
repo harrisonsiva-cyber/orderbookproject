@@ -1,18 +1,17 @@
 import unittest
 import order
-from order import datetime
 
 class MyTestCase(unittest.TestCase):
     def test_orders(self):
         buy_orders = []
         sell_orders = []
-        order1 = order.Order(1, order.OrderType.LIMIT, order.OrderSide.BUY, 500.0, 1, datetime.now())
-        order2 = order.Order(2, order.OrderType.MARKET, order.OrderSide.BUY, 550.0, 5, datetime.now())
-        order3 = order.Order(3, order.OrderType.FOK, order.OrderSide.BUY, 560.0, 10, datetime.now())
-        order4 = order.Order(4, order.OrderType.FOK, order.OrderSide.SELL, 570.0, 15, datetime.now())
-        order5 = order.Order(5, order.OrderType.LIMIT, order.OrderSide.SELL, 580.0, 20, datetime.now())
-        order6 = order.Order(6, order.OrderType.MARKET, order.OrderSide.SELL, 590.0, 35, datetime.now())
-        order7 = order.Order(7, order.OrderType.LIMIT, order.OrderSide.SELL, 600.0, 30, datetime.now())
+        order1 = order.Order(1, order.OrderType.LIMIT, order.OrderSide.BUY, 500.0, 1)
+        order2 = order.Order(2, order.OrderType.MARKET, order.OrderSide.BUY, 550.0, 5)
+        order3 = order.Order(3, order.OrderType.FOK, order.OrderSide.BUY, 560.0, 10)
+        order4 = order.Order(4, order.OrderType.FOK, order.OrderSide.SELL, 570.0, 15)
+        order5 = order.Order(5, order.OrderType.LIMIT, order.OrderSide.SELL, 580.0, 20)
+        order6 = order.Order(6, order.OrderType.MARKET, order.OrderSide.SELL, 590.0, 35)
+        order7 = order.Order(7, order.OrderType.LIMIT, order.OrderSide.SELL, 600.0, 30)
 
         buy_orders.append(order1)
         buy_orders.append(order2)
