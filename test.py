@@ -1,5 +1,6 @@
 import unittest
 import order
+import order_book
 
 class MyTestCase(unittest.TestCase):
     def test_orders(self):
@@ -10,8 +11,8 @@ class MyTestCase(unittest.TestCase):
         order3 = order.Order(3, order.OrderType.FOK, order.OrderSide.BUY, 560.0, 10)
         order4 = order.Order(4, order.OrderType.FOK, order.OrderSide.SELL, 570.0, 15)
         order5 = order.Order(5, order.OrderType.LIMIT, order.OrderSide.SELL, 580.0, 20)
-        order6 = order.Order(6, order.OrderType.MARKET, order.OrderSide.SELL, 590.0, 35)
-        order7 = order.Order(7, order.OrderType.LIMIT, order.OrderSide.SELL, 600.0, 30)
+        order6 = order.Order(6, order.OrderType.MARKET, order.OrderSide.SELL, 590.0, 30)
+        order7 = order.Order(7, order.OrderType.LIMIT, order.OrderSide.SELL, 600.0, 35)
 
         buy_orders.append(order1)
         buy_orders.append(order2)
@@ -29,7 +30,12 @@ class MyTestCase(unittest.TestCase):
         for ord in sell_orders:
             print(ord)
 
+    def test_orderbook(self):
+        orderbook = order_book.order_book()
+        orderbook.add_order(order.OrderSide.BUY, order.OrderType.LIMIT, 1, 500.0)
+        orderbook.add_order(order.OrderSide.SELL, order.OrderType.LIMIT, 2, 50.0)
+        orderbook.add_order(order.OrderSide.BUY, order.OrderType.FOK, 99, 500.0)
+        orderbook.print()
 
 if __name__ == '__main__':
     unittest.main()
-

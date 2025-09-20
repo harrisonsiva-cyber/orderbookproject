@@ -1,5 +1,5 @@
 from enum import Enum
-#
+
 
 class OrderType(Enum):
     FOK = "FOK"
@@ -29,6 +29,6 @@ class Order:
     def print(self):
         print(f"Order Number: {self.order_number}")
         print(f"Order Type: {self.order_type}")
-        print(f"Order Side: {self.side}")
+        print(f"Order Side: {self.order_side}")
         print(f"Price: {self.price}")
         print(f"Quantity: {self.quantity}")
